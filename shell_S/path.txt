@@ -1,0 +1,68 @@
+// 增加执行脚本的路径设置
+// PATH=$PATH:绝对路径
+
+PATH=$PATH:/home/lk/Daily5Ms_sql/shell_S
+PATH=$PATH:/home/lk/Daily5Ms_sql/DataA_S
+PATH:$PATH:/home/lk/Daily5Ms_sql/Spiders_S
+PATH:$PATH:/home/lk/Daily5Ms_sql/SQL_S
+
+上面是环境变量的设置
+还要加入到/etc/profile的文件中才能生效
+
+
+
+export PATH="$PATH:/home/lk/pycharm/bin:/home/lk/PYENV/bin:/home/lk/Daily5Ms_sql/shell_S:/home/lk/Daily5Ms_sql/DataA_S:/home/lk/Daily5Ms_sql/Spiders_S:/home/lk/Daily5Ms_sql/SQL_S"
+
+
+环境变量对于shell脚本的穿透性是很有用的，也是有效的，但是无法穿透py脚本？
+
+应该是要对Py脚本进行路径设置！这才看到了开始设置路径的重要性！
+
+问题转化为要设置Python的环境变量了！
+一个环境变量对一类脚本文件负责（发生作用）
+上面修改了shell的环境变量，所以可以执行shell脚本
+
+现在要设置python的环境变量，把前面的都加入进去?
+
+两个解决思路：
+1.把隔了几个文件夹的路径加入到python的环境变量中(永久修改环境变量)
+（相当于把python的环境变量添加到shell的环境变量中，以执行shell环境变量，自动地python的环境变量也就修改了）
+
+应该还是不行！环境变量只是环境而已，当前路径下没有脚本啊！但是人家shell怎么可以？！
+
+export PATHONPATH="$PYTHONPATH:/home/lk/PYENV/bin:/home/lk/Daily5Ms_sql/DataA_S"
+
+路径(环境变量)设置了，命令怎么过渡过去？
+
+思考：进入到/etc/profile shell环境后，就只对设置后的环境变量起作用了，想办法把python命令加入到shell环境设置中
+
+
+
+
+
+2.把路径缩写简化，cd 简化后的路劲(也就是路径如何简写)
+alias la="ls -al --color=auto"
+
+上面是临时的，要想长久有效，就将上面语句加入到/etc/profile文件中
+
+以下脚本有效
+
+# 环境变量设置
+export PATH="$PATH:/home/lk/pycharm/bin:/home/lk/PYENV/bin:/home/lk/Daily5Ms_sql/shell_S:/home/lk/Daily5Ms_sql/DataA_S:/home/lk/Daily5Ms_sql/Spiders_S:/home/lk/Daily5Ms_sql/SQL_S"
+
+
+
+# 命令简化设置
+alias sa="source activate"  # python环境
+alias css="cd /home/lk/Daily5Ms_sql/Spiders_S" # Py脚本路径简化
+
+# python脚本运行简化
+alias pap="python a50_onestock.py" 
+alias pjp="python J225_OneStock.py"
+alias php="python MHI_OneStock.py"
+alias pup="python onestock_ES500.py"
+alias plp="python oneStock_FTSE100.py"
+
+
+
+# 基本流程是 sa  css  pap...
