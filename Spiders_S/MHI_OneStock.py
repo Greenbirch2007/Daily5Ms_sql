@@ -100,10 +100,10 @@ if __name__ == '__main__':
 #
 # create table MHI_OneStock_PL(
 # id int not null primary key auto_increment,
-# index_PL varchar(10),
-# stock_PL varchar(10),
-# profilo_PL varchar(10),
-# profilo_PL_R varchar(10)
+# index_PL varchar(20),
+# stock_PL varchar(20),
+# profilo_PL varchar(20),
+# profilo_PL_R varchar(20)
 # ) engine=InnoDB  charset=utf8;
 
 

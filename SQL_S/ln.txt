@@ -1,0 +1,92 @@
+# 查询最后一条记录
+
+SELECT * FROM web_monitor.OneStock_ES500_PL order by id desc limit 1;
+
+As -25.1
+Js  -35.4  
+HKs -19.4    
+Ls  -19.1  
+USs  -33.463
+# 转变思路吧，用一条sql语句查询5个表，然后再合并，中间还要倒序，比较费劲
+所以使用python脚本，把5个数据库逐个查询一遍，每次都保存在一个数据结构中，相当于利用了内存的存储功能，这样比较好一些
+# 这个就使用sqlalchemy来处理！
+查询5个最值，放入一个列表，然后再插入最终可视化的数据库
+
+#创建5市场敏感模型的数据库和数据表
+
+create database Daily5m_sql;
+
+create table AJHKLUS(
+id int not null primary key auto_increment,
+_As varchar(10),
+_Js varchar(10),
+_HKs varchar(10),
+_Ls varchar(10),
+_USs varchar(10)
+ ) engine=InnoDB  charset=utf8;
+
+
+
+
+# 创建A股数据的sql
+
+ create table A50_OneStock_PL(
+ id int not null primary key auto_increment,
+ index_PL varchar(10),
+ stock_PL varchar(10),
+ profilo_PL varchar(10),
+ profilo_PL_R varchar(10)
+ ) engine=InnoDB  charset=utf8;
+
+
+
+# 创建日股数据的sql
+
+ create table J225_OneStock_PL(
+ id int not null primary key auto_increment,
+ index_PL varchar(10),
+ stock_PL varchar(10),
+ profilo_PL varchar(10),
+ profilo_PL_R varchar(10)
+ ) engine=InnoDB  charset=utf8;
+
+#  创建港股数据的sql
+ create table MHI_OneStock_PL(
+ id int not null primary key auto_increment,
+ index_PL varchar(10),
+ stock_PL varchar(10),
+ profilo_PL varchar(10),
+ profilo_PL_R varchar(10)
+ ) engine=InnoDB  charset=utf8;
+
+# 创建美股数据的sql
+
+# create table OneStock_ES500_PL(
+# id int not null primary key auto_increment,
+# index_PL varchar(20),
+# stock_PL varchar(20),
+# profilo_PL varchar(20),
+# profilo_PL_R varchar(20)
+# ) engine=InnoDB  charset=utf8;
+
+#创建英股数据的sql
+
+
+# create table oneStock_FTSE100_PL(
+# id int not null primary key auto_increment,
+# index_PL varchar(20),
+# stock_PL varchar(20),
+# profilo_PL varchar(20),
+# profilo_PL_R varchar(20)
+# ) engine=InnoDB  charset=utf8;
+
+
+
+
+
+
+
+
+
+
+
