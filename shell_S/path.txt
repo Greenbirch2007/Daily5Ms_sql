@@ -48,13 +48,14 @@ alias la="ls -al --color=auto"
 以下脚本有效
 
 # 环境变量设置
-export PATH="$PATH:/home/lk/pycharm/bin:/home/lk/PYENV/bin:/home/lk/Daily5Ms_sql/shell_S:/home/lk/Daily5Ms_sql/DataA_S:/home/lk/Daily5Ms_sql/Spiders_S:/home/lk/Daily5Ms_sql/SQL_S"
+export PATH="$PATH:/home/lk/pycharm/bin:/home/lk/PYENV/bin:/home/lk/Daily5Ms_sql/shell_S:/home/lk/Daily5Ms_sql/DataA_S:/home/lk/Daily5Ms_sql/Spiders_S:/home/lk/Daily5Ms_sql/SQL_S:/home/lk/Daily5Ms_sql/DataA_S/A_stocks"
 
 
 
 # 命令简化设置
 alias sa="source activate"  # python环境
 alias css="cd /home/lk/Daily5Ms_sql/Spiders_S" # Py脚本路径简化
+alias csa="cd /home/lk/Daily5Ms_sql/DataA_S/A_stocks"  #进入A股可视化目录
 
 # python脚本运行简化
 alias pap="python a50_onestock.py" 
@@ -62,7 +63,10 @@ alias pjp="python J225_OneStock.py"
 alias php="python MHI_OneStock.py"
 alias pup="python onestock_ES500.py"
 alias plp="python oneStock_FTSE100.py"
+ 
+# 增加可视化的脚本
 
+alias papa="python Astock_backApi.py"
 
 
 # 基本流程是 sa  css  pap...
