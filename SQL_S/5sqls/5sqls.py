@@ -1,34 +1,23 @@
-#!
+#! -*-coding:utf-8 -*-
 
 
 # 基本思路：
 # 1. 先使用sqlalchemy，写5个提取查询最后一条数据的函数，添加入一个列表然后打印这个列表看看效果
-
-
 # 数据表名称
-# | A50_OneStock_PL       |
-# | J225_OneStock_PL      |
-# | MHI_OneStock_PL       |
-# | OneStock_ES500_PL     |
-# | oneStock_FTSE100_PL
+
 
 
 
 
 # 每个数据表的字段名称
-# | id           | int(11)     | NO   | PRI | NULL    | auto_increment |
-# | index_PL     | varchar(10) | YES  |     | NULL    |                |
-# | stock_PL     | varchar(10) | YES  |     | NULL    |                |
-# | profilo_PL   | varchar(10) | YES  |     | NULL    |                |
-# | profilo_PL_R | varchar(10) | YES  |     | NULL    |                |
-# +--------------+-------------+------+-----+---------+------------
 
+import time
 
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, String, Integer
+# from flask import Flask
+# from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy import Column, String, Integer
 import pymysql
-from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy.ext.declarative import declarative_base
 
 #
 # _5sqls = []
@@ -86,7 +75,6 @@ from sqlalchemy.ext.declarative import declarative_base
 #         return _5sqls
 
 
-_5sqls_values = []
 
 
 # 其实没有必要做映射！直接把数据表名打包成一个列表，遍历进入一个查询最后一条的方法，遍历查询，遍历插入一个全局遍历即可，然后再插入一个新的数据库和数据表即可
@@ -94,13 +82,13 @@ _5sqls_values = []
 
 # 写类的方法的时候，都要考虑方法会接收几个参数
 class Sql5:
-    global connection,cursor ,_5sqls,_5sqls_values# 对于数据库参数设置，　设置为全局参数，所有方法都能使用
+    global connection,cursor # 对于数据库参数设置，　设置为全局参数，所有方法都能使用
     # 第一此专门写类，每一个方法一个一个去试
     connection = pymysql.connect(host='127.0.0.1', port=3306, user='root', password='123456', db='web_monitor',
                                  charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
     cursor = connection.cursor()
-    _5sqls = []
-    _5sqls_values = []
+
+
 
     def __init__(self):
         pass
@@ -109,6 +97,7 @@ class Sql5:
     # 1.遍历制作５条查询语句的方法　　　(测试成功)
     @staticmethod
     def sel_5_Into():
+        _5sqls = []
 
         tables_name = ["A50_OneStock_PL ","J225_OneStock_PL","MHI_OneStock_PL","OneStock_ES500_PL","oneStock_FTSE100_PL"]
         for item  in tables_name:
@@ -128,9 +117,8 @@ class Sql5:
         result = cursor.fetchall()
         r_dict = result[0]
         # return r_dict["profilo_PL_R"] #字典取值
-        _5sqls_values.append(r_dict["profilo_PL_R"])
-        connection.commit()
-        connection.close()
+
+        return r_dict["profilo_PL_R"]
 
 
 
@@ -141,32 +129,32 @@ class Sql5:
         connection = pymysql.connect(host='127.0.0.1', port=3306, user='root', password='123456', db='Daily5m_sql',
                                      charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
         cursor = connection.cursor()
-        # 这里是判断big_list的长度，不是content字符的长度
-        if len(big_list) == 5:
-            cursor.executemany(
-                'insert into AJHKLUS (_As,_Js,_HKs,_Ls,_USs) values (%s,%s,%s,%s,%s)', self)
-            connection.commit()
-            connection.close()
-            print('向MySQL中添加数据成功！')
-        else:
-            print('出列啦')
+        cursor.executemany(
+            'insert into AJHKLUS (_As,_Js,_HKs,_Ls,_USs) values (%s,%s,%s,%s,%s)',self)
+        connection.commit()
+        connection.close()
+        print('向MySQL中添加数据成功！')
+
+
+if __name__ =="__main__":
+    i = 0
+    while True:
+        i += 1
+        a5 = Sql5   # 实例化一个类
+        t5 = a5.sel_5_Into()   # 取得5个查询的sql语句
+        print(88*'~')
+        time.sleep(10)
+        _5sqls_values = []
+        for sql in t5:
+            ass = a5.sel_5sql(sql)  # 遍历执行查询语句，得到的结果插入一个全局变量(列表)中
+            _5sqls_values.append(ass)
+        _5tuple = tuple(_5sqls_values)
+        big_list = [_5tuple]  # 只是为了加上一个()套子，而不是改变数据类型
+        a5.exec_5sql(big_list)
+        print(i)
 
 
 
-a =Sql5
-t5 = a.sel_5_Into() #
-for sql in t5:
-    a.sel_5sql(sql)
-print(_5sqls_values)
-
-big_list = [('-23.5', '-37.1', '-18.1', '-22.2', '-34.385')]
-a.exec_5sql(big_list)
-
-# SELECT profilo_PL_R FROM web_monitor.A50_OneStock_PL  order by id desc limit 1;
-# SELECT profilo_PL_R FROM web_monitor.J225_OneStock_PL order by id desc limit 1;
-# SELECT profilo_PL_R FROM web_monitor.MHI_OneStock_PL order by id desc limit 1;
-# SELECT profilo_PL_R FROM web_monitor.OneStock_ES500_PL order by id desc limit 1;
-# SELECT profilo_PL_R FROM web_monitor.oneStock_FTSE100_PL order by id desc limit 1;
 
 #　create database Daily5m_sql;
 
@@ -178,4 +166,3 @@ a.exec_5sql(big_list)
 # _Ls varchar(10),
 # _USs varchar(10)
 #  ) engine=InnoDB  charset=utf8;
-

@@ -48,14 +48,15 @@ alias la="ls -al --color=auto"
 以下脚本有效
 
 # 环境变量设置
-export PATH="$PATH:/home/lk/pycharm/bin:/home/lk/PYENV/bin:/home/lk/Daily5Ms_sql/shell_S:/home/lk/Daily5Ms_sql/DataA_S:/home/lk/Daily5Ms_sql/Spiders_S:/home/lk/Daily5Ms_sql/SQL_S:/home/lk/Daily5Ms_sql/DataA_S/A_stocks"
+export PATH="$PATH:/home/lk/pycharm/bin:/home/lk/PYENV/bin:/home/lk/Daily5Ms_sql/shell_S:/home/lk/Daily5Ms_sql/DataA_S:/home/lk/Daily5Ms_sql/Spiders_S:/home/lk/Daily5Ms_sql/SQL_S:/home/lk/Daily5Ms_sql/DataA_S/A_stocks:/home/lk/Daily5Ms_sql/SQL_S/5sqls"
 
 
-
+# 必须要进入root用户权限才能进行设置！
 # 命令简化设置
 alias sa="source activate"  # python环境
 alias css="cd /home/lk/Daily5Ms_sql/Spiders_S" # Py脚本路径简化
 alias csa="cd /home/lk/Daily5Ms_sql/DataA_S/A_stocks"  #进入A股可视化目录
+alias cqq="cd /home/lk/Daily5Ms_sql/SQL_S/5sqls" # 进入5数据表整合目录
 
 # python脚本运行简化
 alias pap="python a50_onestock.py" 
@@ -63,6 +64,9 @@ alias pjp="python J225_OneStock.py"
 alias php="python MHI_OneStock.py"
 alias pup="python onestock_ES500.py"
 alias plp="python oneStock_FTSE100.py"
+
+
+alias p5q="python 5sqls.py"
  
 # 增加可视化的脚本
 
