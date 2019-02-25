@@ -17,3 +17,11 @@
 2.shell命令简化加入/etc/profile
 3.先断断续续积累数据吧
 
+
+![image](https://github.com/Greenbirch2007/Daily5Ms_sql/blob/master/%E6%90%9C%E7%8B%97%E6%88%AA%E5%9B%BE19%E5%B9%B402%E6%9C%8825%E6%97%A51955_1.png)
+
+
+2019.2.25 
+放弃同时覆盖5个市场，或许以后会用！
+后面只覆盖A股和日股！不要死板！
+
